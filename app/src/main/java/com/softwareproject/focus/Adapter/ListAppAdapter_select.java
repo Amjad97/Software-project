@@ -1,5 +1,6 @@
 package com.softwareproject.focus.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -89,6 +90,12 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 db.del_app(holder.app_name.getText().toString(),Profile_attributes.id_);
+                                Intent intent = new Intent(context,Profile_attributes.class);
+                                intent.putExtra("position",Profile_attributes.position);
+                                intent.putExtra("days",Profile_attributes.d);
+                                intent.putExtra("name",Profile_attributes.profile_name);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
                                 Toast.makeText(v.getContext(), "deleted", Toast.LENGTH_LONG).show();
                             }
                         })

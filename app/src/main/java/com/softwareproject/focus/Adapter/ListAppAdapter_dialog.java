@@ -2,6 +2,7 @@ package com.softwareproject.focus.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -60,7 +61,8 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
                 db = new database(itemView.getContext());
                 if (app_check.isChecked()){
                     db.Insert_app(app_name.getText().toString(),"Activate",0);
-                    MainActivity.alertDialog.dismiss();
+                    Intent intent = new Intent(itemView.getContext(),MainActivity.class);
+                    itemView.getContext().startActivity(intent);
                 }
             }
         });

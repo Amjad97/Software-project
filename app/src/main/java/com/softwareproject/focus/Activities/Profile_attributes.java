@@ -43,14 +43,16 @@ import com.softwareproject.focus.R;
 
 public class Profile_attributes extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    String profile_name,FromTime,ToTime;
+    public static String profile_name;
+    public static String d;
+    String FromTime,ToTime;
     TextView sun,mon,tue,wed,thu,fri,sat,Times;
     CheckBox repeat;
     RecyclerView list_select_app;
-    int position;
+    public static int position;
     public static int id_ ;
     database db;
-    String repeat_value,d;
+    String repeat_value;
     StringBuilder days;
     ArrayList<profile> list_profiles;
     ListAppAdapter_select adapter_;
@@ -403,7 +405,12 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Intent intent = new Intent(Profile_attributes.this,Profile_attributes.class);
+                intent.putExtra("position",position);
+                intent.putExtra("days",d);
+                intent.putExtra("name",profile_name);
+                startActivity(intent);
+                finish();
             }
         });
 
