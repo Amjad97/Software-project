@@ -1,5 +1,6 @@
 package com.softwareproject.focus.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,8 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
                     db.Insert_app(app_name.getText().toString(),"Activate",0);
                     Intent intent = new Intent(itemView.getContext(),MainActivity.class);
                     itemView.getContext().startActivity(intent);
+                    Activity activity =(Activity)itemView.getContext();
+                    activity.finish();
                 }
             }
         });
