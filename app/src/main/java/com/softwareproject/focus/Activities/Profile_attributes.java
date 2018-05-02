@@ -1,9 +1,7 @@
 package com.softwareproject.focus.Activities;
 
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,12 +40,16 @@ import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Models.profile;
 import com.softwareproject.focus.R;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class Profile_attributes extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     public static String profile_name;
     public static String d;
     String FromTime,ToTime;
     TextView sun,mon,tue,wed,thu,fri,sat,Times;
+    LinearLayout no_apps;
     CheckBox repeat;
     RecyclerView list_select_app;
     public static int position;
@@ -81,6 +84,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
         fri = (TextView)findViewById(R.id.Fri);
         sat = (TextView)findViewById(R.id.Sat);
         Times = (TextView)findViewById(R.id.profile_time);
+        no_apps = (LinearLayout)findViewById(R.id.no_apps);
         repeat = (CheckBox)findViewById(R.id.repeat);
         list_select_app = (RecyclerView) findViewById(R.id.selected_list);
 
@@ -278,6 +282,14 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
                 select_app.add(db.getAllApp().get(i));
         }
 
+        if (!select_app.isEmpty()){
+            list_select_app.setVisibility(VISIBLE);
+            no_apps.setVisibility(INVISIBLE);
+        }else {
+            list_select_app.setVisibility(INVISIBLE);
+            no_apps.setVisibility(VISIBLE);
+        }
+
         adapter_ = new ListAppAdapter_select(getApplicationContext(),select_app);
         list_select_app.setLayoutManager(new LinearLayoutManager(this));
         list_select_app.setHasFixedSize(true);
@@ -333,7 +345,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
             }
 
             db.update_profile(id_,profile_name,days.toString(),Times.getText().toString(),repeat_value);
-            Toast.makeText(getApplicationContext(),"Edited",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Edited",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Profile_attributes.this,MainActivity.class);
             startActivity(intent);
             finish();
@@ -479,8 +491,8 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
                 from.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 to.setTextColor(getResources().getColor(R.color.colorPrimary));
                 to.setBackgroundColor(getResources().getColor(R.color.cardview_light_background));
-                from_time.setVisibility(View.VISIBLE);
-                to_time.setVisibility(View.INVISIBLE);
+                from_time.setVisibility(VISIBLE);
+                to_time.setVisibility(INVISIBLE);
             }
         });
 
@@ -491,8 +503,8 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
                 to.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 from.setTextColor(getResources().getColor(R.color.colorPrimary));
                 from.setBackgroundColor(getResources().getColor(R.color.cardview_light_background));
-                from_time.setVisibility(View.INVISIBLE);
-                to_time.setVisibility(View.VISIBLE);
+                from_time.setVisibility(INVISIBLE);
+                to_time.setVisibility(VISIBLE);
             }
         });
 

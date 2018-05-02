@@ -1,6 +1,7 @@
 package com.softwareproject.focus.Adapter;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,21 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.softwareproject.focus.Activities.MainActivity;
 import com.softwareproject.focus.Activities.Profile_attributes;
-import com.softwareproject.focus.Common.Get_apps;
 import com.softwareproject.focus.Database.database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
 import java.util.List;
-
-import static com.softwareproject.focus.Activities.Profile_attributes.id_;
 
 /**
  * Created by Amjad on 07/04/18.
@@ -96,7 +90,7 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
                                 intent.putExtra("name",Profile_attributes.profile_name);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);
-                                Toast.makeText(v.getContext(), "deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {

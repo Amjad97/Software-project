@@ -220,11 +220,44 @@
             </LinearLayout>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/selected_list"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/no_apps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center_horizontal"
+                        android:text="No applications are selected"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add application to block"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:gravity="center_horizontal"/>
+
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/selected_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_margin="10dp"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>

@@ -102,10 +102,10 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (holder.app_switch.isChecked()){
                     db.update_app_status(holder.app_name.getText().toString(),"Activate",0);
-                    Toast.makeText(context,"Activate",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Activate",Toast.LENGTH_SHORT).show();
                 }else {
                     db.update_app_status(holder.app_name.getText().toString(),"Deactivate",0);
-                    Toast.makeText(context,"Deactivate",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Deactivate",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -122,7 +122,7 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 db.del_app(holder.app_name.getText().toString(),0);
-                                Toast.makeText(v.getContext(), "deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(v.getContext(), "deleted", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
