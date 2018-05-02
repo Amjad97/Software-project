@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Focus</string>
+    <string name="selecta_apps">Select your apps</string>
+    <string name="snackbar_not_allowed_title">You must allow Focus to read your notifications</string>
+    <string name="snackbar_not_allowed_action">Allow</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
