@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                                 intent.putExtra("days","Sun,Mon,Tue,Wed,Thu,Fri,Sat");
                                 intent.putExtra("name",profile_name_.getText().toString());
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     });

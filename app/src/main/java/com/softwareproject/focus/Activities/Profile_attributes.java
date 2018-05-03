@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.softwareproject.focus.Adapter.ListAppAdapter_profile;
 import com.softwareproject.focus.Adapter.ListAppAdapter_select;
 import com.softwareproject.focus.Common.Get_apps;
+import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Models.profile;
@@ -417,6 +418,21 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                List<app> apps = db.getAllApp();
+                List<String> apps_name = new ArrayList<>();
+                for (app p :apps){
+                    apps_name.add(p.getName()+" "+p.getProfile_id());
+                }
+
+                for (int i_ = 0;i_< profile_apps.profile_apps.size();i_++){
+                    if (!apps_name.contains(profile_apps.profile_apps.get(i_))){
+                        int n = profile_apps.profile_apps.get(i_).lastIndexOf(" ");
+                        String app_name = profile_apps.profile_apps.get(i_).substring(0,n);
+                        db.Insert_app(app_name,"Active",Profile_attributes.id_);
+                    }
+                }
+
                 Intent intent = new Intent(Profile_attributes.this,Profile_attributes.class);
                 intent.putExtra("position",position);
                 intent.putExtra("days",d);

@@ -25,6 +25,8 @@ import com.softwareproject.focus.Fragments.Frag2_app;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -56,19 +58,6 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
             }
         });
 
-        app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                db = new database(itemView.getContext());
-                if (app_check.isChecked()){
-                    db.Insert_app(app_name.getText().toString(),"Activate",0);
-                    Intent intent = new Intent(itemView.getContext(),MainActivity.class);
-                    itemView.getContext().startActivity(intent);
-                    Activity activity =(Activity)itemView.getContext();
-                    activity.finish();
-                }
-            }
-        });
     }
 }
     private Context context;
@@ -103,6 +92,29 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
         holder.app_image.setImageDrawable(app.loadIcon(pm));
         holder.app_name.setText(app.loadLabel(pm));
         holder.app_check.setChecked(blocked.contains(app.packageName));
+
+        holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (holder.app_check.isChecked()){
+                    List<app> apps = db.get_app();
+                    List<String> apps_name = new ArrayList<>();
+                    for (app p :apps){
+                        apps_name.add(p.getName());
+                    }
+                    if (!apps_name.contains(holder.app_name.getText().toString())){
+                        db.Insert_app(holder.app_name.getText().toString(),"Activate",0);
+                        Intent intent = new Intent(context,MainActivity.class);
+                        context.startActivity(intent);
+                        Activity activity =(Activity)context;
+                        activity.finish();
+                    }else {
+                        Toast.makeText(context,"It's already exist",Toast.LENGTH_SHORT).show();
+                        MainActivity.alertDialog.dismiss();
+                    }
+                }
+            }
+        });
     }
 
     @Override

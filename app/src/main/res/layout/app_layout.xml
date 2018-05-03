@@ -25,41 +25,34 @@
 
         <TextView
             android:id="@+id/app_name"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/app_image"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@+id/app_image"
-            android:layout_weight="8"
-            android:text="App Name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp">
-
+            android:layout_marginLeft="16dp"
+            android:layout_weight="8"
+            android:text="App Name"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
 
         <RelativeLayout
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical">
+            android:layout_height="wrap_content">
 
             <Switch
                 android:id="@+id/app_switch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
 
             <Button
                 android:id="@+id/delete_app"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:visibility="invisible"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/delete"/>
 
         </RelativeLayout>

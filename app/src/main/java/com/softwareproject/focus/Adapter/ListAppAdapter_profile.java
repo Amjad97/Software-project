@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-
 import com.softwareproject.focus.Activities.Profile_attributes;
+import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.database;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +33,6 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
         TextView app_name;
         ImageView app_image;
         CheckBox app_check;
-        database db;
 
         public ViewHolder_profile(final View itemView) {
             super(itemView);
@@ -49,27 +46,19 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
                     app_check.performClick();
                 }
             });
-
-            app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    db = new database(itemView.getContext());
-                    if (app_check.isChecked()){
-                        db.Insert_app(app_name.getText().toString(),"Active",Profile_attributes.id_);
-                    }
-                }
-            });
-
     }
 }
 
+    private Context context;
     private List<ApplicationInfo> apps;
     private PackageManager pm;
     private SharedPreferences preferences;
     private LayoutInflater layoutInflater;
+    private database db;
 
     public ListAppAdapter_profile(Context context,List<ApplicationInfo> apps) {
         this.apps = apps;
+        this.context = context;
         pm = context.getPackageManager();
         layoutInflater = LayoutInflater.from(context);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -83,13 +72,26 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder_profile holder, int position) {
-        ApplicationInfo app = apps.get(position);
+    public void onBindViewHolder(final ViewHolder_profile holder, int position) {
+        db = new database(context);
+
+        final ApplicationInfo app = apps.get(position);
         HashSet<String> blocked = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED,
                 "").split(";")));
         holder.app_image.setImageDrawable(app.loadIcon(pm));
         holder.app_name.setText(app.loadLabel(pm));
         holder.app_check.setChecked(blocked.contains(app.packageName));
+
+        holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (holder.app_check.isChecked()){
+                    profile_apps.profile_apps.add(holder.app_name.getText().toString()+" "+Profile_attributes.id_);
+                }else {
+                    profile_apps.profile_apps.remove(holder.app_name.getText().toString()+" "+Profile_attributes.id_);
+                }
+            }
+        });
     }
 
     @Override
