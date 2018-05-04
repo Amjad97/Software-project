@@ -122,7 +122,7 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
                 db = new database(v.getContext());
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")
-                        .setMessage("Do you want to delete app ? ")
+                        .setMessage("It will be deleted ? ")
                         .setIcon(R.drawable.delete)
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.softwareproject.focus.Activities.Profile_attributes;
+import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
@@ -38,7 +39,6 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
            app_name = (TextView)itemView.findViewById(R.id.app_name_select);
            app_image = (ImageView)itemView.findViewById(R.id.app_image_select);
            app_delete = (Button) itemView.findViewById(R.id.app_delete);
-
        }
    }
 
@@ -78,12 +78,14 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
                 db = new database(v.getContext());
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")
-                        .setMessage("Do you want to delete app ? ")
+                        .setMessage("It will be deleted ? ")
                         .setIcon(R.drawable.delete)
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 db.del_app(holder.app_name.getText().toString(),Profile_attributes.id_);
+                                profile_apps.profile_apps.remove(holder.app_name.getText().toString()+" "+
+                                        Profile_attributes.id_);
                                 Intent intent = new Intent(context,Profile_attributes.class);
                                 intent.putExtra("position",Profile_attributes.position);
                                 intent.putExtra("days",Profile_attributes.d);

@@ -63,6 +63,14 @@ public class database extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL("UPDATE profile SET name='" + name + "' WHERE id='" + id + "'");
     }
 
+    public void update_time(String time,int id) {
+        this.getWritableDatabase().execSQL("UPDATE profile SET Times='" + time + "' WHERE id='" + id + "'");
+    }
+
+    public void update_days(String days,int id) {
+        this.getWritableDatabase().execSQL("UPDATE profile SET Days='" + days + "' WHERE id='" + id + "'");
+    }
+
     public void update_profile(int id, String name, String days, String times, String repeat) {
         this.getWritableDatabase().execSQL("UPDATE profile SET name='" + name + "' WHERE id='" + id + "'");
         this.getWritableDatabase().execSQL("UPDATE profile SET Days='" + days + "' WHERE id='" + id + "'");

@@ -46,7 +46,7 @@ import static android.view.View.VISIBLE;
 
 public class Profile_attributes extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    public static String profile_name;
+    public static String profile_name,time,day,repeat_value;
     public static String d;
     String FromTime,ToTime;
     TextView sun,mon,tue,wed,thu,fri,sat,Times;
@@ -56,13 +56,13 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
     public static int position;
     public static int id_ ;
     database db;
-    String repeat_value;
-    StringBuilder days;
+    StringBuilder days = new StringBuilder();
     ArrayList<profile> list_profiles;
     ListAppAdapter_select adapter_;
     ListAppAdapter_profile adapter;
     SharedPreferences mPreferences;
     List<ApplicationInfo> applications;
+    public static ArrayList<app> select_app;
     PackageManager manager;
 
     @Override
@@ -276,7 +276,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
             }
         });
 
-        ArrayList<app> select_app = new ArrayList<>();
+        select_app = new ArrayList<>();
 
         for (int i =0;i<db.getAllApp().size();i++){
             if (db.getAllApp().get(i).getProfile_id() == id_)
@@ -318,7 +318,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.done) {
-            days = new StringBuilder();
+
             if (sun.getTextColors().getDefaultColor() == Color.WHITE){
                 days.append("Sun,");
             }
@@ -378,7 +378,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
         }else if (id == R.id.delete){
             AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
                     .setTitle("Delete")
-                    .setMessage("Do you` want to Delete profile ? ")
+                    .setMessage("It will be deleted ? ")
                     .setIcon(R.drawable.delete)
                     .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
@@ -433,6 +433,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
                     }
                 }
 
+
                 Intent intent = new Intent(Profile_attributes.this,Profile_attributes.class);
                 intent.putExtra("position",position);
                 intent.putExtra("days",d);
@@ -470,7 +471,6 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
     public boolean onQueryTextChange(String s) {
         if (TextUtils.isEmpty(s)) {
             adapter.setApps(applications);
-
         } else {
             String query = s.toLowerCase();
             ArrayList<ApplicationInfo> filtered = new ArrayList<>();
@@ -544,19 +544,26 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
                 DateFormat df = new SimpleDateFormat("HH:mm");
                 String times = df.format(Calendar.getInstance().getTime());
 
-                if (FromTime != null && ToTime != null)
-                    Times.setText(FromTime+" - "+ToTime);
-                else if (FromTime == null && ToTime != null) {
+                if (FromTime != null && ToTime != null) {
+                    Times.setText(FromTime + " - " + ToTime);
+                    time = Times.getText().toString();
+                    db.update_time(time,id_);
+                } else if (FromTime == null && ToTime != null) {
                     int from_time_ = Times.getText().toString().indexOf(" ");
-                    Times.setText(Times.getText().subSequence(0,from_time_) + " - " + ToTime);
-                }
-                else if (FromTime != null && ToTime == null) {
+                    Times.setText(Times.getText().subSequence(0, from_time_) + " - " + ToTime);
+                    time = Times.getText().toString();
+                    db.update_time(time,id_);
+                } else if (FromTime != null && ToTime == null) {
                     int to_time_ = Times.getText().toString().lastIndexOf(" ");
-                    Times.setText(FromTime + " - " + Times.getText().subSequence(to_time_,Times.getText().length()));
+                    Times.setText(FromTime + " - " + Times.getText().subSequence(to_time_, Times.getText().length()));
+                    time = Times.getText().toString();
+                    db.update_time(time,id_);
+                } else if (FromTime == null && ToTime == null){
+                    Times.setText(times + " - " + times);
+                    time = Times.getText().toString();
+                    db.update_time(time,id_);
                 }
-                else if (FromTime == null && ToTime == null)
-                    Times.setText(times+" - "+times);
-                alertDialog.dismiss();
+            alertDialog.dismiss();
             }
         });
 
@@ -572,7 +579,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
     public void onBackPressed() {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
                 .setTitle("Back")
-                .setMessage("Are you sure you want to ignore your editing ? ")
+                .setMessage("Are you sure you want to go back ? ")
                 .setIcon(R.drawable.back)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override

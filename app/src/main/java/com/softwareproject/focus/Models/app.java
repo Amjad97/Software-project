@@ -12,13 +12,6 @@ public class app {
     private String aSwitch ="";
     private int profile_id;
 
-    public app(String name, String icon_icon , String aSwitch,int profile_id) {
-        this.name = name;
-        this.icon_path = icon_icon;
-        this.aSwitch=aSwitch;
-        this.profile_id=profile_id;
-    }
-
     public app(String name, String aSwitch, int profile_id) {
         this.name = name;
         this.aSwitch = aSwitch;

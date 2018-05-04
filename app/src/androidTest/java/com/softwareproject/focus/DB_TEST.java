@@ -37,9 +37,9 @@ public class DB_TEST {
 
         assertEquals("social media",profile.getName());
         assertEquals("Active",profile.getStatus());
-        assertEquals("Wed",profile.getDuration_from());
-        assertEquals("Fri",profile.getDuration_to());
-        assertEquals("No",profile.getRepeat_type());
+        assertEquals("Wed",profile.getDays());
+        assertEquals("Fri",profile.getTimes());
+        assertEquals("No",profile.getRepeat());
     }
 
     @Test
@@ -49,9 +49,9 @@ public class DB_TEST {
         profile pro = db.getAllProfile().get(0);
         assertEquals(1,pro.getId());
         assertEquals("sleep",pro.getName());
-        assertEquals("sat",pro.getDuration_from());
-        assertEquals("mon",pro.getDuration_to());
-        assertEquals("daily",pro.getRepeat_type());
+        assertEquals("sat",pro.getDays());
+        assertEquals("mon",pro.getTimes());
+        assertEquals("daily",pro.getRepeat());
     }
     @Test
     public void update_status_test(){
@@ -84,7 +84,7 @@ public class DB_TEST {
     @Test
     public void del_profile_test(){
         db.Insert_profile("do not disturb","Deactivate","Wed", "Fri","No");
-        db.del_profile("do not disturb");
+        db.del_profile(1);
 
         assertEquals(false ,db.getAllProfile().contains(new profile(1,"do not disturb","Deactivate","Wed", "Fri","No")));
     }

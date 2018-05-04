@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import com.softwareproject.focus.Adapter.ListAppAdapter_dialog;
 import com.softwareproject.focus.Common.Get_apps;
 import com.softwareproject.focus.Database.database;
@@ -115,7 +117,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            if (!profile_name_.getText().toString().equals("")){
+                            List<String> profile_name__ = new ArrayList<>();
+                            for (int i_ =0 ; i_ < db.getAllProfile().size();i_++){
+                                profile_name__.add(db.getAllProfile().get(i_).getName());
+                            }
+
+                            if (profile_name__.contains(profile_name_.getText().toString())){
+                                Toast.makeText(getApplicationContext(),"There exist a profile with the same name !",Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (!profile_name_.getText().toString().equals("") && !profile_name__.contains(profile_name_.getText().toString())){
 
                                 DateFormat df = new SimpleDateFormat("HH:mm");
                                 Calendar from = Calendar.getInstance();
