@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
     private PackageManager pm;
     private SharedPreferences preferences;
     private LayoutInflater layoutInflater;
-    private database db;
+    private Database db;
 
     public ListAppAdapter_profile(Context context,List<ApplicationInfo> apps) {
         this.apps = apps;
@@ -73,14 +73,12 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
 
     @Override
     public void onBindViewHolder(final ViewHolder_profile holder, int position) {
-        db = new database(context);
+        db = new Database(context);
 
         final ApplicationInfo app = apps.get(position);
-        HashSet<String> blocked = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED,
-                "").split(";")));
+
         holder.app_image.setImageDrawable(app.loadIcon(pm));
         holder.app_name.setText(app.loadLabel(pm));
-        holder.app_check.setChecked(blocked.contains(app.packageName));
 
         holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

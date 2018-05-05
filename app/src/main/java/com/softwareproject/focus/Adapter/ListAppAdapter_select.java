@@ -1,7 +1,5 @@
 package com.softwareproject.focus.Adapter;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
 import java.util.List;
@@ -45,7 +43,7 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
     public Context context;
     private List<app> apps;
     private PackageManager pm;
-    database db;
+    Database db;
 
     public ListAppAdapter_select(Context context, List<app> apps) {
         this.context = context;
@@ -64,18 +62,11 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
     @Override
     public void onBindViewHolder(final ViewHolder_select holder, int position) {
         holder.app_name.setText(apps.get(position).getName());
-        /*
-        Get_apps apps = new Get_apps(context);
-        for (int i = 0;i<apps.get_apps().size();i++){
-            if (apps.get_apps().get(i).loadLabel(pm).equals(holder.app_name.getText().toString())){
-                holder.app_image.setImageDrawable(apps.get_apps().get(i).loadIcon(pm));
-            }
-        }
-*/
+
         holder.app_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                db = new database(v.getContext());
+                db = new Database(v.getContext());
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")
                         .setMessage("It will be deleted ? ")

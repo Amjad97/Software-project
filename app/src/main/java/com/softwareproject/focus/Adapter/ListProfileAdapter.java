@@ -12,7 +12,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.softwareproject.focus.Activities.Profile_attributes;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Interfaces.ItemClickListener;
 import com.softwareproject.focus.Models.profile;
 import com.softwareproject.focus.R;
@@ -53,7 +53,7 @@ public class ListProfileAdapter extends RecyclerView.Adapter<ListProfileViewHold
 
     private Context context;
     private List<profile> profiles;
-    database db;
+    Database db;
 
     public ListProfileAdapter(Context context, List<profile> profiles) {
         this.context = context;
@@ -74,7 +74,7 @@ public class ListProfileAdapter extends RecyclerView.Adapter<ListProfileViewHold
         holder.times.setText(profiles.get(position).getTimes());
         holder.profile_repeate.setText(profiles.get(position).getRepeat());
 
-        db = new database(context);
+        db = new Database(context);
         final List<profile> profiles = db.getAllProfile();
         for (int i=0;i<profiles.size();i++){
             if (profiles.get(i).getStatus().equals("Activate")){

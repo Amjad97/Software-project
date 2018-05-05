@@ -1,9 +1,7 @@
 package com.softwareproject.focus.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Adapter.ListProfileAdapter;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.profile;
 import com.softwareproject.focus.R;
 
@@ -28,7 +25,7 @@ public class Frag1_profile extends Fragment {
 
     RecyclerView profile_list;
     RecyclerView.LayoutManager layoutManager;
-    database db;
+    Database db;
 
     @Nullable
     @Override
@@ -36,7 +33,7 @@ public class Frag1_profile extends Fragment {
 
         View view = inflater.inflate(R.layout.frag1_layout,container,false);
 
-        db = new database(getContext());
+        db = new Database(getContext());
         profile_list = (RecyclerView) view.findViewById(R.id.list_profile);
         ImageView no_profile = (ImageView) view.findViewById(R.id.no_profile);
         List<profile> profiles = db.getAllProfile();

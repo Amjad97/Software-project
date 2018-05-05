@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import com.softwareproject.focus.Adapter.ListAppAdapter_dialog;
 import com.softwareproject.focus.Common.Get_apps;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Fragments.Frag1_profile;
 import com.softwareproject.focus.Fragments.Frag2_app;
 import com.softwareproject.focus.Notification.Utils;
@@ -43,7 +43,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private PackageManager manager;
     private List<ApplicationInfo> applications;
     public static AlertDialog.Builder alert;
-    database db;
+    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        db = new database(this);
+        db = new Database(this);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

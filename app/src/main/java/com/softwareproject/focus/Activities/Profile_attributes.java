@@ -36,7 +36,7 @@ import com.softwareproject.focus.Adapter.ListAppAdapter_profile;
 import com.softwareproject.focus.Adapter.ListAppAdapter_select;
 import com.softwareproject.focus.Common.Get_apps;
 import com.softwareproject.focus.Common.profile_apps;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Models.profile;
 import com.softwareproject.focus.R;
@@ -55,7 +55,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
     RecyclerView list_select_app;
     public static int position;
     public static int id_ ;
-    database db;
+    Database db;
     StringBuilder days = new StringBuilder();
     ArrayList<profile> list_profiles;
     ListAppAdapter_select adapter_;
@@ -71,7 +71,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
         setContentView(R.layout.activity_profile_attributes);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        db = new database(this);
+        db = new Database(this);
 
         Get_apps getApps = new Get_apps(this);
         applications = getApps.get_apps();

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.softwareproject.focus.Adapter.ListAppAdapter_app;
-import com.softwareproject.focus.Database.database;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
 
@@ -26,8 +26,7 @@ import java.util.List;
 public class Frag2_app extends Fragment {
 
     public static ListAppAdapter_app adapter;
-    database db;
-    private SharedPreferences mPreferences;
+    Database db;
     RecyclerView list_app;
     @Nullable
     @Override
@@ -36,9 +35,8 @@ public class Frag2_app extends Fragment {
         View view = inflater.inflate(R.layout.frag2_layout,container,false);
         list_app = (RecyclerView) view.findViewById(R.id.list_app);
         ImageView no_app_sel = (ImageView) view.findViewById(R.id.no_app_sel);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        db = new database(getContext());
+        db = new Database(getContext());
         List<app> app = db.get_app();
 
         if (app.isEmpty()){

@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * Created by Amjad on 03/04/18.
  */
 
-public class database extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
 
-    public static final String name = "database.db";
+    public static final String name = "Database.db";
     Context context;
 
-    public database(Context context) {
+    public Database(Context context) {
 
         super(context, name, null, 1);
         this.context = context;

@@ -2,7 +2,6 @@ package com.softwareproject.focus.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -15,13 +14,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.softwareproject.focus.Activities.MainActivity;
-import com.softwareproject.focus.Common.Get_apps;
-import com.softwareproject.focus.Database.database;
-import com.softwareproject.focus.Fragments.Frag2_app;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
@@ -43,7 +39,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
     TextView app_name;
     ImageView app_image;
     CheckBox app_check;
-    database db;
+    Database db;
 
     public ViewHolder(final View itemView) {
         super(itemView);
@@ -65,7 +61,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
     private List<ApplicationInfo> apps;
     private PackageManager pm;
     private SharedPreferences preferences;
-    database db;
+    Database db;
 
     public ListAppAdapter_dialog( Context context,List<ApplicationInfo> apps) {
         this.apps = apps;
@@ -84,14 +80,11 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        db = new database(context);
+        db = new Database(context);
 
         ApplicationInfo app = apps.get(position);
-        HashSet<String> blocked = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "")
-                .split(";")));
         holder.app_image.setImageDrawable(app.loadIcon(pm));
         holder.app_name.setText(app.loadLabel(pm));
-        holder.app_check.setChecked(blocked.contains(app.packageName));
 
         holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

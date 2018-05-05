@@ -3,7 +3,8 @@ package com.softwareproject.focus;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import com.softwareproject.focus.Database.database;
+
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Models.profile;
 import org.junit.After;
@@ -21,13 +22,13 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class DB_TEST {
 
-    database db;
+    Database db;
 
     @Before
     public void useAppContext() {
         // Context of the app under test.
         Context context = InstrumentationRegistry.getTargetContext();
-        this.db = new database(context);
+        this.db = new Database(context);
     }
 
     @Test

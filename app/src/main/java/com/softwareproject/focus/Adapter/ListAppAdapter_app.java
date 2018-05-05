@@ -13,23 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.softwareproject.focus.Activities.MainActivity;
-import com.softwareproject.focus.Activities.Profile_attributes;
-import com.softwareproject.focus.Common.Get_apps;
-import com.softwareproject.focus.Database.database;
-import com.softwareproject.focus.Fragments.Frag2_app;
+import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Interfaces.ItemClickListener;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -71,7 +64,7 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
     public Context context;
     private List<app> apps;
     private PackageManager pm;
-    private database db;
+    private Database db;
 
     int row_index = -1;
 
@@ -93,7 +86,7 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
     @Override
     public void onBindViewHolder(final ViewHolder_app holder, int position) {
         holder.app_name.setText(apps.get(position).getName());
-        db=new database(context);
+        db=new Database(context);
 
         List<app> apps = db.get_app();
         for (int i=0;i<apps.size();i++){
@@ -119,7 +112,7 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                db = new database(v.getContext());
+                db = new Database(v.getContext());
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")
                         .setMessage("It will be deleted ? ")
