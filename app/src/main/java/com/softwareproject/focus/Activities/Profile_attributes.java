@@ -40,7 +40,6 @@ import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Models.profile;
 import com.softwareproject.focus.R;
-
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 

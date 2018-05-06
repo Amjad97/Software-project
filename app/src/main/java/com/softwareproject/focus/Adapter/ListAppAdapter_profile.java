@@ -16,10 +16,7 @@ import android.widget.TextView;
 import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.Database;
-import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 /**

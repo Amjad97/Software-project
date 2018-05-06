@@ -1,5 +1,6 @@
 package com.softwareproject.focus.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -83,6 +84,8 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
                                 intent.putExtra("name",Profile_attributes.profile_name);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intent);
+                                Activity activity = (Activity) holder.itemView.getContext();
+                                activity.finish();
                                 Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                             }
                         })

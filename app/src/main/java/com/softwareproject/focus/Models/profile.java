@@ -25,16 +25,6 @@ public class profile {
         this.status = status;
     }
 
-    public profile(int id, String name, String days, String times, String repeat, String status, List<app> list_app) {
-        this.id = id;
-        this.name = name;
-        Days = days;
-        Times = times;
-        this.repeat = repeat;
-        this.status = status;
-        this.list_app = list_app;
-    }
-
     public int getId() {
         return id;
     }
@@ -77,10 +67,6 @@ public class profile {
 
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public List<app> getList_app() {

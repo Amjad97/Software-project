@@ -1,7 +1,5 @@
 package com.softwareproject.focus.Models;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by Amjad on 02/04/18.
  */

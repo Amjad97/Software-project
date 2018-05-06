@@ -30,7 +30,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.softwareproject.focus.Adapter.ListAppAdapter_dialog;
 import com.softwareproject.focus.Common.Get_apps;
 import com.softwareproject.focus.Database.Database;
@@ -38,7 +37,6 @@ import com.softwareproject.focus.Fragments.Frag1_profile;
 import com.softwareproject.focus.Fragments.Frag2_app;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
