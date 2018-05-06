@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,8 @@ import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Interfaces.ItemClickListener;
 import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.R;
+
+import java.io.File;
 import java.util.List;
 
 
@@ -86,6 +90,14 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
     @Override
     public void onBindViewHolder(final ViewHolder_app holder, int position) {
         holder.app_name.setText(apps.get(position).getName());
+
+        File internalStorage = context.getDir("app_icons", Context.MODE_PRIVATE);
+        File reportFilePath = new File(internalStorage, holder.app_name.getText().toString() + ".png");
+        String picturePath = reportFilePath.toString();
+        Bitmap reportPicture = BitmapFactory.decodeFile(picturePath);
+
+        holder.app_image.setImageBitmap(reportPicture);
+
         db=new Database(context);
 
         List<app> apps = db.get_app();

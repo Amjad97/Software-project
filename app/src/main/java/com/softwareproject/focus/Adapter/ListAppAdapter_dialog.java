@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,8 @@ import com.softwareproject.focus.Models.app;
 import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -90,6 +96,24 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (holder.app_check.isChecked()){
+
+                    Drawable drawable = holder.app_image.getDrawable();
+                    BitmapDrawable B_D = (BitmapDrawable)drawable;
+                    Bitmap icon = B_D.getBitmap();
+
+                    File internalStorage = context.getDir("app_icons", Context.MODE_PRIVATE);
+                    File reportFilePath = new File(internalStorage, holder.app_name.getText().toString() + ".png");
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(reportFilePath);
+                        icon.compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                        fos.close();
+                    }
+                    catch (Exception ex) {
+                       // Log.i("DATABASE", "Problem updating picture", ex);
+
+                    }
+
                     List<app> apps = db.get_app();
                     List<String> apps_name = new ArrayList<>();
                     for (app p :apps){

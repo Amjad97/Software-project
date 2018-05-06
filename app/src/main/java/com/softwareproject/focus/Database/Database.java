@@ -31,7 +31,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table profile (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,profile_status TEXT,Days TEXT,"
                 + "Times TEXT,repeat TEXT)");
-        db.execSQL("create table app ( app_name TEXT,app_icon_path TEXT,switch_value TEXT, profile_id INTEGER)");
+        db.execSQL("create table app ( app_name TEXT,switch_value TEXT, profile_id INTEGER)");
     }
 
     @Override

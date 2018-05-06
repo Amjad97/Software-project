@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +20,9 @@ import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -81,6 +87,22 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (holder.app_check.isChecked()){
+                    Drawable drawable = holder.app_image.getDrawable();
+                    BitmapDrawable B_D = (BitmapDrawable)drawable;
+                    Bitmap icon = B_D.getBitmap();
+
+                    File internalStorage = context.getDir("app_icons", Context.MODE_PRIVATE);
+                    File reportFilePath = new File(internalStorage, holder.app_name.getText().toString() + ".png");
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(reportFilePath);
+                        icon.compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                        fos.close();
+                    }
+                    catch (Exception ex) {
+                        // Log.i("DATABASE", "Problem updating picture", ex);
+
+                    }
                     profile_apps.profile_apps.add(holder.app_name.getText().toString()+" "+Profile_attributes.id_);
                 }else {
                     profile_apps.profile_apps.remove(holder.app_name.getText().toString()+" "+Profile_attributes.id_);
