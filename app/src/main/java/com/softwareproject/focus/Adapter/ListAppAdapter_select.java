@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +23,12 @@ import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Models.app;
+import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -48,11 +54,13 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
     public Context context;
     private List<app> apps;
     private PackageManager pm;
+    private SharedPreferences preferences;
     Database db;
 
     public ListAppAdapter_select(Context context, List<app> apps) {
         this.context = context;
         this.apps = apps;
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         pm = context.getPackageManager();
         setHasStableIds(true);
     }
@@ -78,6 +86,10 @@ public class ListAppAdapter_select extends RecyclerView.Adapter<ListAppAdapter_s
         holder.app_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                String pkg = ListAppAdapter_profile.pkg;
+                HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
+                pkgs.remove(pkg);
+                preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
                 db = new Database(v.getContext());
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")

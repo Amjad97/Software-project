@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,13 @@ import android.widget.TextView;
 import com.softwareproject.focus.Activities.Profile_attributes;
 import com.softwareproject.focus.Common.profile_apps;
 import com.softwareproject.focus.Database.Database;
+import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -57,6 +61,7 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
     private PackageManager pm;
     private SharedPreferences preferences;
     private LayoutInflater layoutInflater;
+    public static String pkg;
     private Database db;
 
     public ListAppAdapter_profile(Context context,List<ApplicationInfo> apps) {
@@ -75,7 +80,7 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder_profile holder, int position) {
+    public void onBindViewHolder(final ViewHolder_profile holder, final int position) {
         db = new Database(context);
 
         final ApplicationInfo app = apps.get(position);
@@ -86,7 +91,11 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
         holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                pkg = getIem(position).packageName;
+                HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
+
                 if (holder.app_check.isChecked()){
+                    pkgs.add(pkg);
                     Drawable drawable = holder.app_image.getDrawable();
                     BitmapDrawable B_D = (BitmapDrawable)drawable;
                     Bitmap icon = B_D.getBitmap();
@@ -107,6 +116,7 @@ public class ListAppAdapter_profile extends RecyclerView.Adapter<ListAppAdapter_
                 }else {
                     profile_apps.profile_apps.remove(holder.app_name.getText().toString()+" "+Profile_attributes.id_);
                 }
+                preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
             }
         });
     }

@@ -68,6 +68,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
     private List<ApplicationInfo> apps;
     private PackageManager pm;
     private SharedPreferences preferences;
+    public static String pkg;
     Database db;
 
     public ListAppAdapter_dialog( Context context,List<ApplicationInfo> apps) {
@@ -98,7 +99,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                String pkg = getIem(position).packageName;
+                pkg = getIem(position).packageName;
                 HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
 
                     if (holder.app_check.isChecked()) {
@@ -135,9 +136,6 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
                             MainActivity.alertDialog.dismiss();
                     }
                 }
-                //else{
-                  //      pkgs.remove(pkg);
-                    //}
                     preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
             }
         });

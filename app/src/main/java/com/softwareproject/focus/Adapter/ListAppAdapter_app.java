@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,10 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
                     db.update_app_status(holder.app_name.getText().toString(),"Activate",0);
                     Toast.makeText(context,"Activate",Toast.LENGTH_SHORT).show();
                 }else {
+                    String pkg = ListAppAdapter_dialog.pkg;
+                    HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
+                    pkgs.remove(pkg);
+                    preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
                     db.update_app_status(holder.app_name.getText().toString(),"Deactivate",0);
                     Toast.makeText(context,"Deactivate",Toast.LENGTH_SHORT).show();
                 }
@@ -131,6 +136,10 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
             @Override
             public void onClick(final View v) {
                 db = new Database(v.getContext());
+                String pkg = ListAppAdapter_dialog.pkg;
+                HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
+                pkgs.remove(pkg);
+                preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(v.getContext())
                         .setTitle("Delete")
                         .setMessage("It will be deleted ? ")
