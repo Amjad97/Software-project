@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
         this.apps = apps;
         this.context=context;
         pm = context.getPackageManager();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         layoutInflater = LayoutInflater.from(context);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         setHasStableIds(true);
@@ -85,7 +87,7 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         db = new Database(context);
 
         ApplicationInfo app = apps.get(position);
@@ -95,41 +97,48 @@ public class ListAppAdapter_dialog extends RecyclerView.Adapter<ListAppAdapter_d
         holder.app_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (holder.app_check.isChecked()){
 
-                    Drawable drawable = holder.app_image.getDrawable();
-                    BitmapDrawable B_D = (BitmapDrawable)drawable;
-                    Bitmap icon = B_D.getBitmap();
+                String pkg = getIem(position).packageName;
+                HashSet<String> pkgs = new HashSet<>(Arrays.asList(preferences.getString(Utils.PREF_PACKAGES_BLOCKED, "").split(";")));
 
-                    File internalStorage = context.getDir("app_icons", Context.MODE_PRIVATE);
-                    File reportFilePath = new File(internalStorage, holder.app_name.getText().toString() + ".png");
-                    FileOutputStream fos = null;
-                    try {
-                        fos = new FileOutputStream(reportFilePath);
-                        icon.compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
-                        fos.close();
-                    }
-                    catch (Exception ex) {
-                       // Log.i("DATABASE", "Problem updating picture", ex);
+                    if (holder.app_check.isChecked()) {
+                        pkgs.add(pkg);
+                        Drawable drawable = holder.app_image.getDrawable();
+                        BitmapDrawable B_D = (BitmapDrawable)drawable;
+                        Bitmap icon = B_D.getBitmap();
 
-                    }
+                        File internalStorage = context.getDir("app_icons", Context.MODE_PRIVATE);
+                        File reportFilePath = new File(internalStorage, holder.app_name.getText().toString() + ".png");
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(reportFilePath);
+                            icon.compress(Bitmap.CompressFormat.PNG, 100 /*quality*/, fos);
+                            fos.close();
+                        }
+                        catch (Exception ex) {
+                            // Log.i("DATABASE", "Problem updating picture", ex);
+                        }
 
-                    List<app> apps = db.get_app();
-                    List<String> apps_name = new ArrayList<>();
-                    for (app p :apps){
-                        apps_name.add(p.getName());
-                    }
-                    if (!apps_name.contains(holder.app_name.getText().toString())){
-                        db.Insert_app(holder.app_name.getText().toString(),"Activate",0);
-                        Intent intent = new Intent(context,MainActivity.class);
-                        context.startActivity(intent);
-                        Activity activity =(Activity)context;
-                        activity.finish();
-                    }else {
-                        Toast.makeText(context,"It's already exist",Toast.LENGTH_SHORT).show();
-                        MainActivity.alertDialog.dismiss();
+                        List<app> apps = db.get_app();
+                        List<String> apps_name = new ArrayList<>();
+                        for (app p :apps){
+                            apps_name.add(p.getName());
+                        }
+                        if (!apps_name.contains(holder.app_name.getText().toString())){
+                            db.Insert_app(holder.app_name.getText().toString(),"Activate",0);
+                            Intent intent = new Intent(context,MainActivity.class);
+                            context.startActivity(intent);
+                            Activity activity =(Activity)context;
+                            activity.finish();
+                        }else {
+                            Toast.makeText(context,"It's already exist",Toast.LENGTH_SHORT).show();
+                            MainActivity.alertDialog.dismiss();
                     }
                 }
+                //else{
+                  //      pkgs.remove(pkg);
+                    //}
+                    preferences.edit().putString(Utils.PREF_PACKAGES_BLOCKED, TextUtils.join(";", pkgs)).apply();
             }
         });
     }

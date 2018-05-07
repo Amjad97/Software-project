@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -214,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // check to see if the enabledNotificationListeners String contains our package name
         return !(enabledNotificationListeners == null || !enabledNotificationListeners.contains(packageName));
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -224,7 +224,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     .setAction(R.string.snackbar_not_allowed_action, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(Utils.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                                startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+                            } else {
+                                startActivity(new Intent(Utils.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+                            }
                         }
                     })
                     .setActionTextColor(getResources().getColor(R.color.cardview_light_background))

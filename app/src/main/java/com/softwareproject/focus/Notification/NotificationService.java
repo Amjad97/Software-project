@@ -19,6 +19,7 @@ public class NotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification notification) {
+
        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(NotificationService.this);
 
       if (preferences.getBoolean(Utils.PREF_ENABLED, false)) {
@@ -27,11 +28,12 @@ public class NotificationService extends NotificationListenerService {
       if (blocked.contains(notification.getPackageName())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 cancelNotification(notification.getKey());
-            } else {
-            cancelNotification(notification.getPackageName(), notification.getTag(), notification.getId());
             }
+        } else {
+          cancelNotification(notification.getPackageName(), notification.getTag(), notification.getId());
+        }
       }
-      }}
+      }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {

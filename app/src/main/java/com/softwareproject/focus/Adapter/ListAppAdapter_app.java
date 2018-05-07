@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,9 +26,12 @@ import com.softwareproject.focus.Activities.MainActivity;
 import com.softwareproject.focus.Database.Database;
 import com.softwareproject.focus.Interfaces.ItemClickListener;
 import com.softwareproject.focus.Models.app;
+import com.softwareproject.focus.Notification.Utils;
 import com.softwareproject.focus.R;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -69,13 +74,14 @@ public class ListAppAdapter_app extends RecyclerView.Adapter<ListAppAdapter_app.
     private List<app> apps;
     private PackageManager pm;
     private Database db;
-
+    private SharedPreferences preferences;
     int row_index = -1;
 
     public ListAppAdapter_app(Context context, List<app> apps) {
         this.context = context;
         this.apps = apps;
         this.pm = context.getPackageManager();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         setHasStableIds(true);
     }
 

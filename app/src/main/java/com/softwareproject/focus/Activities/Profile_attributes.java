@@ -355,8 +355,7 @@ public class Profile_attributes extends AppCompatActivity implements SearchView.
             final View view1 = inflater.inflate(R.layout.create_profile,null);
             final EditText profile_name_ = (EditText) view1.findViewById(R.id.profile_dialog_name);
             profile_name_.setText(profile_name);
-            alert.setTitle("Create a new profile");
-
+            alert.setTitle("New name ");
             alert.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

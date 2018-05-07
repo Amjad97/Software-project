@@ -128,7 +128,7 @@ public class Database extends SQLiteOpenHelper {
     public ArrayList<app> get_app() {
         ArrayList<app> arraylist = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor rs = db.rawQuery("select app_name, app_icon_path, switch_value, profile_id from app Where profile_id=0",
+        Cursor rs = db.rawQuery("select app_name, switch_value, profile_id from app Where profile_id=0",
                 null);
         rs.moveToFirst();
         while (!rs.isAfterLast()) {
